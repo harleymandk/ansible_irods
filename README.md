@@ -1,2 +1,2 @@
 # ansible_irods
-quick and dirty way to build a irods server with Ansible
+quick and dirty way to build a irods server with Ansible on CentOS 7
