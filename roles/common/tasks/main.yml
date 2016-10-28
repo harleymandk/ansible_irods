@@ -95,26 +95,31 @@
 
 ######
 #########Fetch iRODS and build
-#- name: download iRODS file and unpack it
-#  get_url:
-#    url: ftp://ftp.renci.org/pub/irods/releases/4.1.9/irods-4.1.9.tar.gz
-#    dest: /root/
-#- unarchive: src=/root/irods-4.1.9.tar.gz dest=/tmp/ remote_src=yes
+- name: download iRODS file and unpack it
+  get_url:
+    url: ftp://ftp.renci.org/pub/irods/releases/4.1.9/irods-4.1.9.tar.gz
+    dest: /root/
+- unarchive: src=/root/irods-4.1.9.tar.gz dest=/tmp/ remote_src=yes
 
-#- copy: src=build_irods.sh dest=/tmp/irods-4.1.9/packaging/ owner=root group=root mode=0755
+- copy: src=build_irods.sh dest=/tmp/irods-4.1.9/packaging/ owner=root group=root mode=0755
 
-#- shell: /tmp/irods-4.1.9/packaging/build_irods.sh
+- shell: /tmp/irods-4.1.9/packaging/build_irods.sh
 
-#- name: install irods rpm from a local file
-#  yum: name=/tmp/irods-4.1.9/build/irods-icat-4.1.9-64bit-centos7.rpm state=present
+- name: install irods rpm from a local file
+  yum: name=/tmp/irods-4.1.9/build/irods-icat-4.1.9-64bit-centos7.rpm state=present
 
-#- name: install irods rpm from a local file
-#  yum: name=/tmp/irods-4.1.9/build/irods-database-plugin-postgres-1.9-centos7.rpm state=present
+- name: install irods rpm from a local file
+  yum: name=/tmp/irods-4.1.9/build/irods-database-plugin-postgres-1.9-centos7.rpm state=present
 
-#- name: install irods rpm from a local file
-#  yum: name=/tmp/irods-4.1.9/build/irods-dev-4.1.9-64bit-centos7.rpm state=present
+- name: install irods rpm from a local file
+  yum: name=/tmp/irods-4.1.9/build/irods-dev-4.1.9-64bit-centos7.rpm state=present
 
-#- name: install irods rpm from a local file
-#  yum: name=/tmp/irods-4.1.9/build/irods-runtime-4.1.9-64bit-centos7.rpm state=present
+- name: install irods rpm from a local file
+  yum: name=/tmp/irods-4.1.9/build/irods-runtime-4.1.9-64bit-centos7.rpm state=present
 
+- name: Install python packages
+  shell: pip install -U pip jsonschema jinja2
+
+#- name: config iCAT server
+#  shell: iinit < /opt/irods/init_responses
 
