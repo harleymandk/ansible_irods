@@ -1,0 +1,120 @@
+---
+- include: postgresql.yml
+- include: firewalld.yml
+
+- name: upgrade all packages
+  yum: name=* state=latest
+# This playbook contains common plays that will be run on all nodes.
+
+- name: Install ntp
+  yum: name=ntp state=latest
+
+- name: install the latest version of Apache
+  yum: name=httpd state=latest
+
+- name: install the 'Development tools' package group
+  yum: name="@Development tools" state=present
+
+- name: Install common dependencies
+  yum: name={{ item }} state=installed
+  with_items:
+   - libselinux-python
+   - libsemanage-python
+   - firewalld
+   - net-tools
+   - python-pip 
+   - gcc-c++ 
+   - make 
+   - python-devel 
+   - rpm-build 
+   - help2man 
+   - unixODBC 
+   - fuse-devel 
+   - curl-devel
+   - openssl-devel
+   - pam-devel
+   - bzip2-devel
+   - zlib-devel
+   - pam-devel
+   - libxml2-devel
+   - perl-JSON
+   - rsync
+   - unixODBC-devel
+   - epel-release
+   - wget
+   - nano
+   - mc
+   - mlocate
+   - ImageMagick
+   - bzip2-devel
+   - tomcat
+   - tomcat-webapp*
+   - tomcat-admin-webapps
+   - tomcat-docs-webapp
+   - tomcat-javadoc
+   - postgresql-contrib
+   - postgresql-libs
+   - fuse-libs.x86_64
+   - perl-JSON*
+   - python-requests.noarch
+   - python-psutil
+   - lsof
+   - authd
+   - postgresql
+   - postgresql-libs
+   - postgresql-plperl
+   - postgresql-plpython
+   - postgresql-server
+   - python-jsonschema
+   - python-psutil
+   - python-requests
+   - postgresql-odbc
+   - python-pip
+   - git
+   - gettext-devel
+   - perl-CPAN
+   - perl-devel
+   - zlib-devel
+   - python-psycopg2
+#   - libpq-dev
+
+- name: Install python packages
+  shell: pip install git+git://github.com/iPlantCollaborativeOpenSource/pycommands.git
+
+- name: Install python packages
+  shell: pip install --upgrade pip
+
+- name: Install python packages
+  shell: pip install --upgrade git+git://github.com/irods/python-irodsclient.git
+
+- name: Install python packages
+  shell: pip install pigshare
+
+- name: Install python packages
+  shell: pip install --upgrade pigshare
+
+######
+#########Fetch iRODS and build
+#- name: download iRODS file and unpack it
+#  get_url:
+#    url: ftp://ftp.renci.org/pub/irods/releases/4.1.9/irods-4.1.9.tar.gz
+#    dest: /root/
+#- unarchive: src=/root/irods-4.1.9.tar.gz dest=/tmp/ remote_src=yes
+
+#- copy: src=build_irods.sh dest=/tmp/irods-4.1.9/packaging/ owner=root group=root mode=0755
+
+#- shell: /tmp/irods-4.1.9/packaging/build_irods.sh
+
+#- name: install irods rpm from a local file
+#  yum: name=/tmp/irods-4.1.9/build/irods-icat-4.1.9-64bit-centos7.rpm state=present
+
+#- name: install irods rpm from a local file
+#  yum: name=/tmp/irods-4.1.9/build/irods-database-plugin-postgres-1.9-centos7.rpm state=present
+
+#- name: install irods rpm from a local file
+#  yum: name=/tmp/irods-4.1.9/build/irods-dev-4.1.9-64bit-centos7.rpm state=present
+
+#- name: install irods rpm from a local file
+#  yum: name=/tmp/irods-4.1.9/build/irods-runtime-4.1.9-64bit-centos7.rpm state=present
+
+

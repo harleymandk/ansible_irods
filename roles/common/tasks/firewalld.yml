@@ -1,0 +1,24 @@
+##############Firwall###################
+###WEBserver
+- firewalld: service=http permanent=true state=enabled
+
+- firewalld: service=https permanent=true state=enabled
+
+- firewalld: port=8080/tcp permanent=true state=enabled
+
+- firewalld: port=8009/tcp permanent=true state=enabled
+
+### Mangler Varnish!
+
+###FW.DB
+- firewalld: port=5432/tcp permanent=true state=enabled
+
+###FW.Irods##
+- firewalld: port=1247/tcp permanent=true state=enabled
+
+- firewalld: port=1248/tcp permanent=true state=enabled
+
+####Mangler BIG-file porte : 20000-20199
+##restart
+- shell: /usr/bin/firewall-cmd --reload
+

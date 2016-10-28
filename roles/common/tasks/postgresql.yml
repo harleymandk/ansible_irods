@@ -1,0 +1,21 @@
+- name: install PostgreSQL
+  yum: name=postgresql-server state=installed
+  sudo: yes
+
+- name: initdb
+  command: postgresql-setup initdb creates=/var/lib/pgsql/data/pg_hba.conf
+  sudo: yes
+
+- name: copy pg_hba.conf
+  copy: src=pg_hba.conf dest=/var/lib/pgsql/data/pg_hba.conf
+  notify: restart postgresql
+  sudo: yes
+
+- name: enable and start the PostgreSQL server
+  service: name=postgresql enabled=yes state=started
+  sudo: yes
+
+- name: install the python module
+  yum: name=python-psycopg2 state=installed
+  sudo: yes
+
